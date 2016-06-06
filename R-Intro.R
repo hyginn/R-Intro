@@ -102,9 +102,9 @@ typeInfo <- function(x) {
 
 # TASK:
 #    1. Place the function typeInfo() into a file named "typeInfo.R" based on
-#    the file functionTemplate.R
+#    the file "functionTemplate.R".
 #    2. Annotate and comment as required.
-#    3. Configure your project to load Utilities.R upon startup (how?).
+#    3. Configure your project to load typeInfo.R upon startup (how?).
 #    4. Exit R Studio, and start it again.
 #
 #    How do you know the function is now available?
@@ -303,7 +303,7 @@ typeInfo(myDF)
 # ... but I think this is unsound practice.
 
 # Task:
-# 1 - load the data in Table_S3.xls on the Wiki
+# 1 - load the data in table_S3.xls
 #     into Excel, and save it as
 #     a .csv (comma separated values) file.
 # 2 - Examine the file (a plain text file) in a
@@ -322,8 +322,6 @@ typeInfo(myDF)
 #       -> See sample solution if needed.
 
 # ==== CHECKPOINT  ... =====================
-
-
 
 
 # Much output. Nb. for a heavy-duty function, we should rewrite
@@ -410,7 +408,6 @@ tail(LPSdat)
 nrow(LPSdat)
 ncol(LPSdat)
 LPSdat$genes[1:10]
-
 
 
 # Now we can finally return to our original question and
@@ -701,7 +698,7 @@ typeof(3)
 # ===== Sample data ==================================================
 
 # Let's start with a small datframe of synthetic data to go through the main
-# principles of subsetting. The same principles apply to matrices and vetors -
+# principles of subsetting. The same principles apply to matrices and vectors -
 # however, data frames are more flexible because their columns can contain data
 # of different types (character, numeric, logical ...). Values in vectors and
 # matrices must always have the same type.
