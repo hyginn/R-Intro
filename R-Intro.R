@@ -5,17 +5,18 @@
 #          - functions
 #          - data ...
 #
-# Version: 1.0
+# Version: 1.1
 #
-# Date:    2016  06  01
+# Date:    2017  06  01
 # Author:  Boris Steipe (boris.steipe@utoronto.ca)
 #
-# V 1.0    First code
+# V 1.1    2017 updates
+# V 1.0    First code 2016
 #
 # TODO:
 #
 #
-# == HOW TO WORK WITH THIS FILE ======================================
+# == HOW TO WORK WITH THIS FILE ================================================
 #
 #  Go through this script line by line to read and understand the
 #  code. Execute code by typing <cmd><enter>. When nothing is
@@ -33,20 +34,21 @@
 #  Google for an answer, or ask me. Don't continue if you don't
 #  understand what's going on. That's not how it works ...
 #
-#  This is YOUR file. Write your notes in here and add as many
-#  comments as you need to understand what's going on here when you
-#  come back to it in a year. That's the right way: keep code, data
-#  and notes all in one place.
+#  Once you have typed and executed the function init(), you will find a file
+#  called myScript.R in the project directory.
 #
-# ====================================================================
+#  Open it, you can place all of your code-experiments and notes into that
+#  file. This will be your "Lab Journal" for this session.
+#
+# ==============================================================================
 
 
 
-# ==================================================
-# Getting data into R
-# ==================================================
+# ==============================================================================
+# 1 Getting data into R
+# ==============================================================================
 
-# === Assigning variables
+# === 1.1 Assigning variables
 
 x <- "1"
 x
@@ -75,7 +77,7 @@ x
 sprintf("%50.49f", pi)
 
 
-# === Digression: Anatomy of a function ...
+# === 1.1 Digression: Configuring startup behaviour ...
 
 
 # Various functions exist to display the properties of R objects.
@@ -120,8 +122,53 @@ typeInfo <- function(x) {
 
 
 
-# === DATA TYPES ...
-# === Creating vectors
+# === 1.1 DATA TYPES ...
+
+# = 1.1.1 Scalars
+#
+# Single elements (scalars) are vectors of length 1
+
+(x <- 5)    # numeric
+length(x)
+typeInfo(x)
+
+(x <- 5L)    # integer
+length(x)
+typeInfo(x)
+
+(x <- TRUE)  # logical
+length(x)
+typeInfo(x)
+
+# TASK:
+#    1. Special strings in R include the following. Do *not* put these into
+#       quotation marks!
+#          TRUE and FALSE   # Booleans.
+#          NA               # Not Available
+#          NULL             # An empty vector
+#          Inf              # Infinite  ... try 1/0
+#          -Inf             # negative infinity
+#          NaN              # Not a number ... log(-1)
+#
+#        What are the *types* of these special keywords?
+#
+#     2. Try:  typeInfo(as.numeric(NA))
+#              typeInfo(as.integer(NA))
+#              typeInfo(as.character(NA))
+#        What's happening? Why is this behavior useful?
+
+# ==== CHECKPOINT =========================
+# Place a green PostIt on the lid of your
+# laptop when done, place a pink PostIt
+# if this didn't work or if you have
+# questions.
+# =========================================
+
+
+
+# === 1.1.1 Vectors
+#
+# The key rule about vectors is: all elements *must* have the same type!
 
 # Recapitulate:
 v <- c(1, 1, 2, 3, 5, 8)
@@ -130,6 +177,8 @@ v <- c(v, 13, 25)
 v
 
 1:3
+seq_along(v)
+
 seq(-0.5, 0.5, by = 0.1)
 rep("Ha", 3)
 
@@ -138,8 +187,11 @@ genes <- c("Spic", "Cebpb", "Lyz2", "Sfpi1", "Nfkbiz")
 # monocytes...
 
 
-# Digression: A paper from modern high-throughput
-#             biology...
+
+
+
+
+# = 1.1 A source of data ...
 
 
 # TASK: Unzip and browse the Jaitin et al. paper.
@@ -1208,8 +1260,8 @@ LPSdat[(LPSdat$B.LPS - LPSdat$B.ctrl) > 2, 1:3]
 # ===== Just for fun =================================================
 
 # Finally, let's plot a heatmap of the data, first subtracting the .ctrl values
-# from .LPS values, then picking every gene for which at least value has a more
-# than two-foild expression change."
+# from .LPS values, then picking every gene for which at least one value has a
+# more than two-fold expression change."
 
 diffMat <- matrix(numeric(nrow(LPSdat) * 7), ncol = 7)
 for (i in 1:7) {
