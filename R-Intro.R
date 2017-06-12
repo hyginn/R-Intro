@@ -524,7 +524,7 @@ LPSdat$genes[1:10]
 
 # This is my preferred way of identifying columns in dataframes. It is more
 # explicit (and therefore safer) than putting ...
-LPSdat[1, 1:10]
+LPSdat[1:10, 1]
 # ... into a script, although it accomplishes the same.
 #
 
