@@ -21,7 +21,7 @@
 # First we open the file and have a look what it contains. Then we will properly
 # read it into an R object.
 
-rawDat <- read.csv("Jaitin_2014-table_S3.csv",
+rawDat <- read.csv("table_S3.csv",
 header = FALSE,
 stringsAsFactors = FALSE)
 
@@ -55,15 +55,30 @@ colnames(LPSdat) <- c("genes",      # gene names
 "cluster")    # Gene assigned to cluster by authors
 rownames(LPSdat) <- 1:nrow(LPSdat)
 
+str(LPSdat)
+
 for (i in 2:ncol(LPSdat)) { # convert number columns to numeric
-LPSdat[,i] <- as.numeric(LPSdat[ ,i])
+    LPSdat[,i] <- as.numeric(LPSdat[ ,i])
 }
+
+rm(rawDat)
 
 # confirm
 head(LPSdat)
 str(LPSdat)
 
 typeInfo(LPSdat)
+
+# Now, if everything is as it should be, let's save the object so we can
+# easily reload it later.
+
+save(LPSdat, file = "LPSdat.RData")
+
+# rm(LPSdat)
+# head(LPSdat)
+
+# load("LPSdat.RData")
+# head(LPSdat)
 
 
 # [END]

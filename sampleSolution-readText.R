@@ -4,7 +4,19 @@
 #
 # ==============================================================================
 
-# ==== A: Enter data one by one ============
+#TOC> ==========================================================================
+#TOC>
+#TOC>   Section  Title                                                   Line
+#TOC> -----------------------------------------------------------------------
+#TOC>   1        Solution 1: Enter data into code, element by element      19
+#TOC>   2        Solution 2: Enter data "by hand" all at once              44
+#TOC>   3        Solution 3: Use the readLines() function                 105
+#TOC>   4        Solution 4: Use the read.csv() function                  113
+#TOC>
+#TOC> ==========================================================================
+
+
+# =    1  Solution 1: Enter data into code, element by element  ================
 #
 # 1. use a text-processor to replace each occurrence of a
 #    paragraph-break with the string ", ".
@@ -21,12 +33,18 @@ charGenes <- c("Cd19", "Cd79b", "Cd22", "Cd37", "Ctsd",
                "Nfkbia", "Il15", "Cxcl10", "Ifit1", "Isg15",
                "Irf7")
 
+# Note: you need a text processor that does _not_ change quotationmarks, does
+# _not_ add formatting, does _not_ play any of the shenanigans that are designed
+# to support secretarial tasks, and does _not_ hide the essential details of
+# your file from you (like the file extension). Fortunately, you already have
+# one: you can use RStudio as a code editor, but also as a plain-text editor!
 
 
-# ==== B: Enter data "by hand" all at once =
+
+# =    2  Solution 2: Enter data "by hand" all at once  ========================
 
 # 1. Copy/paste the contents of Fig_3-CharacteristicGenes.txt
-# 2. Place all into quotation marks
+# 2. Place it all into quotation marks
 # 3. Assign this multi-line string a variable
 # 4. Use strsplit() to split it into elements
 # 5. unlist() the result
@@ -84,19 +102,22 @@ charGenes <- unlist(strsplit(s, "\n"))
 
 
 
-# ==== C: Use readLines() =============
+# =    3  Solution 3: Use the readLines() function  ============================
+
 charGenes <- readLines("Fig_3-CharacteristicGenes.txt")
 
 # Note: this produces a vector of strings
 
 
 
-# ==== D: Use read.csv() =============
+# =    4  Solution 4: Use the read.csv() function  =============================
 charGenes <- read.csv("Fig_3-CharacteristicGenes.txt",
                       header = FALSE,
                       stringsAsFactors = FALSE)
 
-# Note: this produces a dataframe
+# Note: this produces a dataframe. This is super useful if we need to work
+# with data from an Excel spreadsheet! Simply save the data as csv to then
+# import it into R.
 
 
 

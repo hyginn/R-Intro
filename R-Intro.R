@@ -45,7 +45,7 @@
 
 
 # ==============================================================================
-# 1 Getting data into R
+# = 1 Getting data into R
 # ==============================================================================
 
 # === 1.1 Assigning variables
@@ -102,6 +102,8 @@ typeInfo <- function(x) {
 # Where do we save it so it becomes available whenever
 # we start up R?
 
+# = 1.1.1 Task: a simple function; configuring R
+
 # TASK:
 #    1. Place the function typeInfo() into a file named "typeInfo.R" based on
 #    the file "functionTemplate.R".
@@ -139,6 +141,8 @@ typeInfo(x)
 (x <- TRUE)  # logical
 length(x)
 typeInfo(x)
+
+# = 1.1.1.1 Task: Language keywords
 
 # TASK:
 #    1. Special strings in R include the following. Do *not* put these into
@@ -187,10 +191,6 @@ genes <- c("Spic", "Cebpb", "Lyz2", "Sfpi1", "Nfkbiz")
 # monocytes...
 
 
-
-
-
-
 # = 1.1 A source of data ...
 
 
@@ -204,6 +204,8 @@ genes <- c("Spic", "Cebpb", "Lyz2", "Sfpi1", "Nfkbiz")
 # Often the data we need can be copied and pasted from simple
 # text files.
 
+# = 1.1.1 Task: Getting data into R
+
 # TASK: open the text file for "Fig_3-CharacteristicGenes".
 #       (the link is in the Wiki) in your browser. I have
 #       prepared this file from the text in the actual
@@ -214,7 +216,7 @@ genes <- c("Spic", "Cebpb", "Lyz2", "Sfpi1", "Nfkbiz")
 #       Then, design a function that would
 #       do this conveniently.
 
-#       -> See sample solution if needed.
+#       -> See sampleSolution-readText.R if needed.
 
 
 
@@ -225,7 +227,7 @@ genes <- c("Spic", "Cebpb", "Lyz2", "Sfpi1", "Nfkbiz")
 # questions.
 # =========================================
 
-
+# = 1.1.1 Task: Working with strings
 
 # TASK: Consolidate working with text: convert a binomial
 #       scientific name into a 5-letter label. The string
@@ -245,9 +247,12 @@ genes <- c("Spic", "Cebpb", "Lyz2", "Sfpi1", "Nfkbiz")
 
 
 
-# ===================================================
-# Lists
-# ===================================================
+# ==============================================================================
+# = 1 Storing data in R
+# ==============================================================================
+
+
+# = 1.1 Lists
 
 
 # Lists are the workhorses of R. They are objects that
@@ -276,9 +281,7 @@ pUC19$sites$BanI[2]
 unlist(pUC19)   # Explain ....
 
 
-# ===================================================
-# Data frames
-# ===================================================
+# = 1.1 Dataframes - from csv or tsv data
 
 # A data frame is a matrix or a "set" of data. It is
 # a list of vectors and/or factors of the same length,
@@ -287,6 +290,9 @@ unlist(pUC19)   # Explain ....
 # (subject, animal, etc).
 
 # Since it is basically a list, the columns can have different type!
+
+# Your concept of a spreadsheet maps naturally into dataframes, where the
+# rows are rows, and the columns are columns.
 
 myDF <- data.frame(genes = c("Abc1", "Qrz", "Fubr31"),
                    expr = c(168059, 23490578, 34),
@@ -320,8 +326,8 @@ typeInfo(myDF)
 # This is the same file that is posted with the paper as supplementary material
 # on the Science Website.
 
-# TASK: unzip and open supplementary table 3 in Excel:
 
+# TASK: open supplementary table 3 in Excel:
 
 
 # A word on Excel: it's a very good spreadsheet program,
@@ -354,12 +360,15 @@ typeInfo(myDF)
 # http://cran.r-project.org/web/packages/xlsReadWrite/
 # ... but I think this is unsound practice.
 
-# Task:
+
+# = 1.1.1 Task: Read supplementary table S3 from Excel
+
+# TASK:
 # 1 - load the data in table_S3.xls
 #     into Excel, and save it as
 #     a .csv (comma separated values) file.
 # 2 - Examine the file (a plain text file) in a
-#     text-editor (such as R).
+#     text-editor (such as the RStudio editor).
 # 3 - Read the table into R, assigning it to a variable.
 #     I usually give the first input of data the variable
 #     name "rawDat" since it will usually be processed before
@@ -371,8 +380,6 @@ typeInfo(myDF)
 # 7 - Use typeInfo() to analyse the object you have created.
 
 
-#       -> See sample solution if needed.
-
 # ==== CHECKPOINT  ... =====================
 
 
@@ -381,9 +388,7 @@ typeInfo(myDF)
 
 # Now: what is it with the "factors".
 
-# ==================================================
-# Digression: Factors...
-# ==================================================
+# = 1.1.1 Digression: Factors in dataframes
 
 # Many of R's dataframe methods convert all strings
 # into factors by default. Factors are special types:
@@ -423,7 +428,7 @@ is.ordered(sampleGrades)
 # and needs to be turned off. Always use the parameter
 # stringsAsFactors = FALSE to achieve this. If you don't
 # you are in for some bad surprises if e.g. there is
-# a character "contaminant" in a numeric column.
+# a character "contaminant" such as "NA" in a numeric column.
 
 # Note: you can change R's default behaviour and set a global
 #       option to "turn factors off". Some advocate this,
@@ -444,12 +449,18 @@ myDF3 <- as.numeric(as.character(myDF))
 myDF3     # :-)
 
 
+# = 1.1.1 Task: Fix problems of the "LPSdat" dataframe
+
+
 # TASK: Repair the LPSdat data.frame - reload it with
 #       stringsAsFactors = FALSE
 
-#       -> See sample solution if needed.
+#       -> See sample solution sampleSolution-readSup3.R if needed.
 
 # ==== CHECKPOINT  ... =====================
+
+
+# = 1.1 First view of the S3 data
 
 
 # Check to see what we have ...
@@ -459,29 +470,42 @@ head(LPSdat)
 tail(LPSdat)
 nrow(LPSdat)
 ncol(LPSdat)
+
+
 LPSdat$genes[1:10]
 
+# This is my preferred way of identifying columns in dataframes. It is more
+# explicit (and therefore safer) than putting ...
+LPSdat[1, 1:10]
+# ... into a script, although it accomplishes the same.
+#
 
-# Now we can finally return to our original question and
-# check how enrichment profiles characterize cell-types
-# in the data, we can try
+# I will use this "$" syntax throughout - unless there is an important reason
+# not to.
+
+# Now we can finally return to our original question:
+#     Are the "known" markers of Fig. 2 D enriched
+#     as expected in the cell types?
+#
+# How do enrichment profiles characterize cell-types
+# in the data? Try:
 
 LPSdat[LPSdat$genes == "Cd19", ]
-LPSdat[LPSdat$genes == "Lyz2", ]
+LPSdat[LPSdat$genes == "Cd8a", ]
 
 # But!
 LPSdat[LPSdat$genes == "B220", ]   # Not found!
 
 # B220 has a number of synonyms as a quick Google search shows:
-B220
-CD45
-CD45R
-GP180
-L-CA
-LCA
-LY5
-PTPRC
-T200
+#       B220
+#       CD45
+#       CD45R
+#       GP180
+#       L-CA
+#       LCA
+#       LY5
+#       PTPRC
+#       T200
 
 # We should check if the gene is listed under any of
 # these synonyms in the data...
@@ -515,11 +539,15 @@ B220synonyms %in% toupper(LPSdat$genes)
 # Positive control!
 c(B220synonyms, "CD19") %in% toupper(LPSdat$genes)
 
-# TASK: check if our "characteristic genes" are all in the table
+
+# = 1.1.1 Task: characteristic genes?
+
+
+# TASK: check if our "characteristic genes" from Fig. 3B are all in the table
 #       then find the enrichment vectors for the subset
 #       Bst2, Siglech, Ly6d, Irf8
 
-#       -> See sample solution if needed.
+#       What do you find?
 
 # ==== CHECKPOINT  ... =====================
 
@@ -530,18 +558,17 @@ c(B220synonyms, "CD19") %in% toupper(LPSdat$genes)
 # "programs".
 
 
-# ================================================== #
-#                                                    #
-# Chapter 3:  Programming basics                     #
-#                                                    #
-# ================================================== #
-
+# ==============================================================================
+# = 1 Programming basics
+# ==============================================================================
 
 
 # We need two major concepts to program:
 # - defining conditions (TRUE/FALSE)
-# - repeating commands (loops)
+# - repeating commands (loops, control flow)
 
+
+# = 1.1 Conditionals
 
 x <- -2
 
@@ -610,11 +637,9 @@ identical(a, b)
 ?is.unsorted
 ?is.vector
 
+# = 1.1 Loops
 
-# =============================================
-# Loops
-
-# for loop
+# = 1.1.1 for loop
 n <- 1000000
 x <- rnorm(n,10,1)
 y <- sqrt(x)
@@ -623,7 +648,9 @@ y <- sqrt(x)
 lim <- 50000 # try this with successively larger values
 l <- c();
 system.time(
-    for (i in 1:lim) { l[i] <- sqrt(x[i]) }
+    for (i in 1:lim) {
+        l[i] <- sqrt(x[i])
+    }
 )
 
 # ... at a great performance cost. Precreating them for the
@@ -631,16 +658,21 @@ system.time(
 lim <- 50000 # try this with successively larger values
 l <- numeric(lim)
 system.time(
-    for (i in 1:lim) { l[i] <- sqrt(x[i]) }
+    for (i in 1:lim) {
+        l[i] <- sqrt(x[i])
+    }
 )
 
 
-# while loop
+# = 1.1.1 while loop
 x <- ""
-while (substr(x, nchar(x), nchar(x)) != "G") {
-    x <- paste(x, sample(LETTERS[1:15], 1), sep="")
+while (substr(x, nchar(x), nchar(x)) != "K") {
+    x <- paste(x, sample(LETTERS[-c(2,10,15,21,24,26)], 1), sep="")
 }
 x
+
+# What does this do?
+
 
 
 # =============================================
@@ -667,21 +699,31 @@ x <- cbind(x, rnorm(n,10,1))
 x <- cbind(x, rnorm(n,10,1))
 
 y <- numeric(length(x))
-system.time(for (i in 1:nrow(x)) {y[i] <- sqrt(sum(x[i,]))})
+system.time(
+    for (i in 1:nrow(x)) {
+        y[i] <- sqrt(sum(x[i,]))
+    })
 
 # R has a set of functions that take advantage
 # of this: ?apply and its siblings:
 
 z <- numeric(length(x))
-system.time(z <- apply(x, 1, function(swan) {sqrt(sum(swan))}))
+system.time(z <- apply(x, 1, function(myRow) {sqrt(sum(myRow))}))
 identical(y,z)
 
+rm(x)
+rm(y)
+rm(z)
 
-# Usually the time savings are considered important.
+
+# Usually the time savings of apply() are considered important.
 # I often prefer the explicitness of simple for-loops
 # for development and debugging.
 
-# =============================================
+
+# = 1.1.1 Digression: namespaces
+
+
 # A note on namespaces
 mf <- function(a){
     for (i in 1:a) {
@@ -701,6 +743,8 @@ typeof(3)
 rm(typeof)
 typeof(3)
 
+# = 1.1.1 Task: vectorize a previously written function
+
 # TASK: write a biCodes function that
 #       operates on vectors.
 
@@ -711,29 +755,26 @@ typeof(3)
 
 
 
-# ==================================================
-# Back to our dataset
-# ==================================================
+# .... Back to our dataset
+
+
+# = 1.1 Task: more analysis of data
+
 
 # TASK: what genes have the characteristics of the
-#       unlabelled cluster in Figure 3?
+#       unlabelled cluster in Figure 3B?
 #       Develop the structure of a program to find them.
 #       Implement it step by step.
 
 
 
-# ================================================== #
-#                                                    #
-# Chapter 4:  Basic Analysis                         #
-#                                                    #
-# ================================================== #
+# ==============================================================================
+# = 1 Basic Analysis
+# ==============================================================================
 
 
 
-# ==================================================
-# Filtering data
-# ==================================================
-#
+# = 1.1 Subsetting data - Review of the principles
 
 
 # A significant portion of your efforts in any project will be spent on
@@ -742,12 +783,7 @@ typeof(3)
 # that support these tasks.
 
 
-# ====================================================================
-#        PART ONE: REVIEW
-# ====================================================================
-
-
-# ===== Sample data ==================================================
+# = 1.1.1 A sample dataset
 
 # Let's start with a small datframe of synthetic data to go through the main
 # principles of subsetting. The same principles apply to matrices and vectors -
@@ -790,7 +826,7 @@ str(dat)
 ?"["
 
 
-# ===== Subsetting by index ==========================================
+# = 1.1.1 Subsetting by index
 
 # Elements can be uniquely identified by indices in the range of their length
 # (for vectors), or their rows and columns (in dataframes and matrices). The
@@ -834,7 +870,7 @@ dat[order(dat[ , 1]), 1:3]  # ordered by lexical order of names
 # individually, then see how they fit into the brackets to subset the data.
 
 
-# ==== Negative indices
+# = 1.1.1.1  Negative indices
 
 # If you specify a negative index, that element is excluded.
 
@@ -845,8 +881,8 @@ dat[-1:-3, 1:3]
 dat[-(1:3), 1:3]  # same effect
 
 
+# = 1.1.1 Subsetting by logical
 
-# ===== Subsetting by boolean ========================================
 
 # Instead of indices, we can specify sets of rows or columns by boolean values
 # (type: logical): TRUE or FALSE. If we place a vector of logicals into the
@@ -895,10 +931,10 @@ dat[apply(dat[ , 4:8], 1, myF), ]
 
 # But we can also write the definition "in place"...
 apply(dat[ , 4:8], 1, function(x){all(x < 0.5)})
-#-------------------------
+
 dat[apply(dat[ , 4:8], 1, function(x){all(x < 0.5)}), ]
 
-# ====== String matching expressions
+# = 1.1.1.1  Filtering by string matching expressions
 
 # The function grep(), and the %in% operator can be used to subset via string
 # matching:
@@ -916,7 +952,7 @@ dat[dat[ , 3] %in% scary, 1:3]
 
 
 
-# ===== Subsetting by name ===========================================
+# = 1.1.1 Subsetting by name
 
 # If rownames and/or columnnames have been defined, we can use these for
 # selection. If not defined, they default to the row/column numbers as character
@@ -949,7 +985,7 @@ dat[1:3, colnames(dat)[grep("^X", colnames(dat))]]
 # when you need a slice of the data for testing purposes, but even then it may
 # be preferrable to use the head() or tail() functions.
 
-# ===== The "$" operator
+# = 1.1.1 The "$" operator
 
 # The "$" operator returns a single column as a vector. It is not strictly
 # necessary - the column can just as well be named in quotation marks within the
@@ -970,17 +1006,11 @@ dat[1:3, legs]   # this returns an error - hopefully; but if for any
 
 
 
-# ====================================================================
-#        APPLICATION OF SUBSETTING
-# ====================================================================
+# = 1.1 Subsetting data - tasks
 
-# ===== reading and preprocessing a dataset ==========================
+# After this introduction/review, it is your turn to put things into practice,
+# and to practice subsetting / filtering:
 
-# After this introduction/review, it is your turn to put things into practice.
-#
-#
-# ===== Your turn ... ================================================
-#
 # Here are tasks for you to code. My suggested answers are included ... you need
 # to scroll down to see them. Obviously this is pointless unless you really try
 # to solve this yourself."
@@ -1256,8 +1286,7 @@ LPSdat$B.LPS - LPSdat$B.ctrl
 LPSdat[(LPSdat$B.LPS - LPSdat$B.ctrl) > 2, 1:3]
 
 
-
-# ===== Just for fun =================================================
+# = 1.1.1 Example - Heatmap of a subset
 
 # Finally, let's plot a heatmap of the data, first subtracting the .ctrl values
 # from .LPS values, then picking every gene for which at least one value has a
@@ -1282,11 +1311,12 @@ heatmap(diffMat[seq(1, nrow(LPSdat), by = 3), ], col = rgcol(256))
 # Fine. But what does this mean?
 
 
-# ==================================================================== OUTLOOK
-# ON SUBSETTING
-# ==================================================================== There are
-# many more function for data preparation that this tutorial did not cover. You
-# should know about the following functions:"
+# ==============================================================================
+# = 1 Outlook, and further practice
+# ==============================================================================
+
+# There are many more function for data preparation that this tutorial did not
+# cover. You should know about the following functions:"
 
 ?subset   # ... better not used in programs however
 ?match
@@ -1302,8 +1332,7 @@ heatmap(diffMat[seq(1, nrow(LPSdat), by = 3), ], col = rgcol(256))
 # https://cran.r-project.org/web/packages/magrittr/
 
 
-
-
+# = 1.1 Task: more analyis to consolidate concepts
 
 # TASK: find the top 30 most differentially enriched
 #       genes in the Mo cells. Hint: you will need to sort
@@ -1316,30 +1345,17 @@ heatmap(diffMat[seq(1, nrow(LPSdat), by = 3), ], col = rgcol(256))
 #       differential enrichment of one against the other.
 
 
-
-# ==================================================
-# Basic plots and slightly more advanced plots
-# ==================================================
-
-# Task: Plot boxplots for the different cell-types,
+# TASK: Plot boxplots for the different cell-types,
 #       then plot the actual values of requested
 #       genes.
 
 
-# Task: show the differential expression as a
+# TASK: Show the differential expression as a
 #       barplot.
 
-# Task: Barplots are bad. Improve the barplot according to
+
+# TASK: Barplots are bad. Improve the barplot according to
 #       Weissgerber et al.'s ideas
-
-
-# More plotting topics.
-
-
-
-# ==================================================
-# Integrating data
-# ==================================================
 
 # TASK: Data integration
 # 1 - find all genes that look like a Monocyte
@@ -1348,9 +1364,6 @@ heatmap(diffMat[seq(1, nrow(LPSdat), by = 3), ], col = rgcol(256))
 #     IDs using http://biodbnet.abcc.ncifcrf.gov/
 # 3 - see whether they are co-expressed (i.e.
 #     presumably coregulated) at http://coxpresdb.jp/
-
-
-
 
 
 # [END]

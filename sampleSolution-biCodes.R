@@ -17,7 +17,7 @@ biCodes <- function(s) {
 	#     s: a single string
 	# Value:
 	#     v: an upper-case binomial code derived from
-	#        the n-first and n-second letters in the first two
+	#        the nFirst and nSecond letters in the first two
 	#        words of the input string
 
     nFirst  <- 3
