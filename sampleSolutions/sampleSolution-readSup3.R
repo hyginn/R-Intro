@@ -14,9 +14,9 @@
 
 # http://www.ncbi.nlm.nih.gov/pubmed/24531970
 
-# This data set contains log values of expression changes in different cell
-# types, responding to lipopolysaccharide stimulation. It was posted as an Excel
-# file.  I have simply opened that file, and saved it as .csv, unchanged.
+# This data set contains log2 fold changes of gene expression enrichment in different cd11c+ cell
+# populations, and their response to lipopolysaccharide stimulation. It was posted as an Excel
+# file on the Science Website.  I have simply opened that file, and saved it as .csv, unchanged.
 
 # First we open the file and have a look what it contains. Then we will properly
 # read it into an R object.

@@ -1,15 +1,16 @@
 # R-Intro.R
 #
-# Purpose: Introduction to R
-#          - expressions
-#          - functions
-#          - data ...
+# Purpose: Introduction to R workshop
+#          - workshop setup
+#          - contents and reference to workshop modules
+#          - contents of supporting modules and assets
 #
-# Version: 1.1
+# Version: 2.0
 #
-# Date:    2017  06  01
+# Date:    2018  05  08
 # Author:  Boris Steipe (boris.steipe@utoronto.ca)
 #
+# V 2.0    Reconceived for 2018 workshop
 # V 1.1    2017 updates
 # V 1.0    First code 2016
 #
@@ -91,9 +92,86 @@
 
 
 
+# =    1  INTRODUCTION
+
+# You have worked through the pre-class introductory tutorial linked from
+# http://steipe.biochemistry.utoronto.ca/abc/index.php/R_tutorial (and if you
+# haven't - let us know!). This is a classical way of introducing material in a
+# strctured, piecewise, linear fashion, concept by concept. In our class-time we
+# will do something different: we'll work on four mini-projects that integrate
+# the pre-work concepts. In this way, we'll cover all the basics, introduce some
+# new ideas, but most importantly, practice using R in real-world scenarios.
+
+# It's esasy to hack together a few lines of code - that's something you can
+# always do. But we'll take the opportunity in this workshop to practice some
+# sound principles of development: specifying tasks, breaking workflow up
+# into functions, organizing a project directory, writing tests, working
+# with scripts to keep things reproducible, and more.
+
+# We will proceed by defining tasks, then it is up to you to break down the
+# task into small, computable steps, and to implement them. As we go along,
+# we'll also learn to validate and debug code.
+
+# Our four projects focus on:
+#   - simple sequence analysis
+#   - data models
+#   - working with numeric data
+#   - using Bioconductor tools
+
+# The tasks are contained in R scripts that we may update during the
+# course or workshop. Since all of the material is in an R project that is
+# laoded from GitHub, updating files is easy - just select "Pull branches" from
+# the version control menu. However, we would also like you to write your own
+# notes, code experiments, and task solutions. These would be overwritten and
+# lost if they are in the same file that is being updated. So we are making
+# local copies for you to edit. Each of the core scripts - sequenceAnalysis.R,
+# dataModels.R, numericData.R, and BioconductorTools.R - are being copied to
+# corresponding files with a "my-" prefix: mySequenceAnalsysis.R ... etc. These
+# files are the ones you should edit, use the others just for reference when
+# needed.
+
+# Once again: edit, annotate, extend and work with my<file>.R files. Save these
+# files (but don't commit them).
+
+
+# = 1 GETTING STARTED
+
+
+# = 1.1 Keep a Journal ...
+
+
+# = 1.1 What's in the box ...
+
+# Overview of files and assets
+
+
+# = 1 SIMPLE SEQUENCE ANALYSIS
+
+# In the file pane of RStudio, click on "mySequenceAnalysis.R" to work with- and
+# edit it. (What? There is no file by that name? Either you never typed init(),
+# or you are not looking at the right directory. If you can't figure out what
+# the problem is, let us know.)
+
+
+
+
+# Brief review of concepts
+# emphasize own development, translate tasks to code
+#
+# Genome annotation
+# chr 20 from HUGO
+# add biomart
+# 3D plot from3D structure
+# intro to graphs
+
+
+
+
+
+
 
 # ==============================================================================
-# =    1  Getting data into R  =================================================
+# =    1  INTRODUCTION  =================================================
 # ==============================================================================
 
 # ==   1.1  Assigning variables  ===============================================
