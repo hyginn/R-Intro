@@ -89,7 +89,11 @@ source("./sampleSolutions/sequenceAnalysisSampleSolutions-ShowPlot.R")
 #
 # Task 2.4: Actually read "chr20-100kbp.fasta" and assign it to "mySeq".
 #           - confirm that this has worked. How?
+<<<<<<< HEAD
 
+=======
+#
+>>>>>>> 883c8cc22dfd1c5c02c63482b6b43e2871993e01
 
 # =    3  ANALYZE THE DATA  ====================================================
 #
