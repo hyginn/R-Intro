@@ -111,7 +111,7 @@
 #             - Intro to testthat principles in unitTesting.R
 #
 # Task 2.4: Actually read "chr20-100kbp.fasta" and assign it to "mySeq".
-              mySeq <- readFasta("chr20-100kbp.fasta")
+              mySeq <- readFasta("./data/chr20-100kbp.fasta")
 #           - confirm that this has worked. How?
               objectInfo(mySeq)
               length(mySeq)
