@@ -32,14 +32,14 @@
 
 
 #TOC> ==========================================================================
-#TOC>
+#TOC> 
 #TOC>   Section  Title                     Line
 #TOC> -----------------------------------------
 #TOC>   1        SCENARIO                    46
 #TOC>   2        READ DATA                   55
-#TOC>   3        ANALYZE THE DATA            98
-#TOC>   4        PLOT DATA                  114
-#TOC>
+#TOC>   3        ANALYZE THE DATA            94
+#TOC>   4        PLOT DATA                  110
+#TOC> 
 #TOC> ==========================================================================
 
 
@@ -90,10 +90,6 @@ source("./sampleSolutions/sequenceAnalysisSampleSolutions-ShowPlot.R")
 # Task 2.4: Actually read "chr20-100kbp.fasta" and assign it to "mySeq".
 #           - confirm that this has worked. How?
 #
-# Task 2.5: Actually read "chr20-100kbp.fasta" and assign it to "mySeq".
-#           - confirm that this has worked. How?
-#
-
 
 # =    3  ANALYZE THE DATA  ====================================================
 #
