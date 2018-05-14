@@ -1,4 +1,4 @@
-# myIntroCourseNotes.R
+# myIntroNotes.R
 
 # Write your general notes and code experiments into this document. Save it
 # from time to time - however I recommend that you do not _commit_
