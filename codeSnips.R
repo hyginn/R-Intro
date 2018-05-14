@@ -20,5 +20,29 @@ tObs <- table(dinuc)
 dinucRand <- dinucVector(sample(mySeq))
 tRand <- table(dinucRand)
 
+# Barplot things:
+sortedNames <- names(sort(tObs, decreasing = TRUE))
+
+tObs[sortedNames]
+tRand[sortedNames]
+
+
+barplot(tObs[sortedNames]/sum(tObs),
+        col = "#0070AA55",
+        cex.names = 0.45)
+
+barplot(tRand[sortedNames]/sum(tRand),
+        col = "#DD005555",
+        add = TRUE,
+        axisnames = FALSE)
+
+legend("topright",
+       c("Observed", "Randomized"),
+       cex = 0.8,
+       fill = c("#0070AA55","#DD005555"),
+       border = "#000000")
+
+
+
 
 # [end]
