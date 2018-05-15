@@ -67,13 +67,13 @@
 # going to be in the notes you take, the scripts you write, and the attitudes
 # and habits you adopt (1).
 
-# Our four projects focus on:
+# Our three projects focus on:
 #   - simple sequence analysis
 #   - data integration
 #   - working with numeric data
-#   - using Bioconductor tools
 
-# The tasks are contained in R scripts that we may update during the
+
+# The tasks are contained in R scripts that we may updated during the
 # course or workshop. Since all of the material is in an R project that is
 # laoded from GitHub, updating files is easy - just select "Pull branches" from
 # the version control menu. However, we would also like you to write your own

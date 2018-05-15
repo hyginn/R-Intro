@@ -54,6 +54,7 @@ writeMyCopy <- function(FN, prefix = "my", outFile) {
 writeMyCopy("tmp.R", outFile = "myIntroNotes.R")
 writeMyCopy("sequenceAnalysis.R")
 writeMyCopy("dataIntegration.R")
+writeMyCopy("numericData.R")
 
 
 # Clean up

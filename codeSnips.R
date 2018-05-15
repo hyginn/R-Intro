@@ -22,9 +22,9 @@ tObs <- table(dinuc)
 dinucRand <- dinucVector(sample(mySeq))
 tRand <- table(dinucRand)
 
-# ====== Impoving the function =================================================
+# ====== Improving the function ================================================
 # Better code:
-# The less "pedestrian version" is to use paste in asmarter way.
+# The less "pedestrian version" is to use paste in a smarter way.
 # Vectors that are paste()'ed are joined element by element:
 
 paste(c("A", "B", "C"), c("D", "E", "F"), sep = ":")  # "A:D" "B:E" "C:F"
@@ -86,6 +86,19 @@ legend("topright",
        fill = c("#0070AA55","#DD005555"),
        border = "#000000")
 
+# ===== Ensebl transcripts =====================================================
+
+# read data
+GNAStranscripts <- read.csv("./data/ENSG00000087460data.csv",
+                            stringsAsFactors = FALSE)
+
+# subset data
+sel <- GNAStranscripts$gene_type == "protein_coding"
+GNAStranscripts <- GNAStranscripts[ sel , ]
+
+# ENST transcripts only
+sel <- grep("^ENST[0-9]{11}$", GNAStranscripts$transcript_id)
+GNAStranscripts <- GNAStranscripts[ sel , ]  # 58 different ones
 
 
 

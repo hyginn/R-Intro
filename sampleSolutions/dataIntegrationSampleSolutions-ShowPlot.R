@@ -86,10 +86,7 @@ rm(mMut374378bc0)
 rm(n2cex374378bc0)
 rm(colProtein374378bc0)
 rm(nMax374378bc0)
-rm(i)
-rm(j)
-rm(x)
-rm(y)
+rm(i, j, x, y)
 
 
 # [END]
