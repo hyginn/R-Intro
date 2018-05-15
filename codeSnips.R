@@ -101,5 +101,98 @@ sel <- grep("^ENST[0-9]{11}$", GNAStranscripts$transcript_id)
 GNAStranscripts <- GNAStranscripts[ sel , ]  # 58 different ones
 
 
+# ===== Integrating the data  ==================================================
+
+# read the GRCh37 gene model data from BioMart
+GNASmodels <- read.delim("GNASgeneModels.37.tsv",
+                         sep = "\t",
+                         stringsAsFactors = FALSE)
+
+# extract the information for ENST00000371095
+sel <- GNASmodels$Transcript.stable.ID == "ENST00000371095"
+GNAS2model <- data.frame(start = GNASmodels$Genomic.coding.start[sel],
+                         end   = GNASmodels$Genomic.coding.end[sel],
+                         stringsAsFactors = FALSE)
+
+# careful, transcripts were not ordered in ascending coordinates. Fix that:
+ord <- order(GNAS2model$start)
+GNAS2model <- GNAS2model[ord, ]
+
+
+
+
+# Task 4.2.2 Create a data frame for GNAS-2 protein annotations, according to
+#            the  following specifications:
+#
+#     -  Call it GNAS2protein
+#     -  It should have one row for each nucleotide in the CDS
+#     -  Give it the following columns:
+#           GNAS2protein$coord     - the genomic coordinates
+#           GNAS2protein$nuc       - the actual nucleotide
+#           GNAS2protein$codonPos  - 1,2 or 3: the codon position
+#           GNAS2protein$aa        - The amino acid (in codon position 1 only)
+#           GNAS2protein$iCodon    - The codon index (in all three positions)
+
+
+mod2coord <- function(m) {
+    # gene model to a vector of coordinates
+    v <- numeric()
+    for (i in 1:nrow(m)) {
+        v <- c(v, m$start[i]:m$end[i])
+    }
+    return(v)
+}
+
+OFFSET <- 57410000
+
+GNAS2protein <- data.frame(coords = mod2coord(GNAS2model))
+GNAS2protein$nuc <- mySeq37[GNAS2protein$coords - OFFSET]
+GNAS2protein$codonPos <- 1:3
+
+tail(GNAS2protein) # looking good
+
+
+library(seqinr)
+x <- translate(GNAS2protein$nuc)
+paste(x, collapse = "")  # is this correct?
+
+GNAS2protein$aa <- " "
+sel <- which(GNAS2protein$codonPos == 1)
+GNAS2protein$aa[sel]     <- translate(GNAS2protein$nuc)
+
+GNAS2protein$iCodon <- floor((0:(nrow(GNAS2protein) - 1)) / 3) + 1
+
+
+# Task 4.2.2 Create a data frame for GNAS-2 protein mutations, according to
+#            the  following specifications:
+#     -  Call it GNAS2mut
+#     -  Get all rows from GNASmutations where the positions fall
+#          into the GNAS-2 CDS
+
+sel <- which(GNASmutations$START %in% GNAS2protein$coords)
+GNAS2mut <- GNASmutations[sel, ] # Note: technically, not all of these have been
+                                 # observed on the GNAS2 transcript, allthough
+                                 # they all fall into the GNAS2 CDS
+
+# >>> confirm that the reference nucleotides are the nucleotides we have
+#     in GNAS2protein
+idx <- grep("[ACGT]", GNAS2mut$REF)
+for (i in idx) {
+    cat(sprintf("%d - %s - %s\n",
+                GNAS2mut$START[i],
+                GNAS2mut$REF[i],
+                GNAS2protein$nuc[GNAS2protein$coords == GNAS2mut$START[i]]))
+}
+
+table(GNAS2mut$START)  # how many of each?
+
+# >>> Are there codons that are affected more than once?
+sel <- which(GNAS2protein$coords %in% GNAS2mut$START)
+table(GNAS2protein$iCodon[sel]) # Yes. That would be difficult to tell from
+# the mutation table, because different
+# transcripts have different lengths.
+
+
+
 
 # [end]
