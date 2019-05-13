@@ -51,13 +51,13 @@ writeMyCopy <- function(FN, prefix = "my", outFile) {
 }
 
 # Create a local copy of all core .R modules if those copies don't exist yet.
-writeMyCopy("tmp.R", outFile = "myIntroNotes.R")
+writeMyCopy("journal.md")
 writeMyCopy("sequenceAnalysis.R")
 writeMyCopy("dataIntegration.R")
 writeMyCopy("numericData.R")
 
 
-# Clean up
+# Clean up - remove functions from workspace
 rm(checkFileExists)
 rm(writeMyCopy)
 
