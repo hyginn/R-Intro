@@ -8,11 +8,12 @@
 #
 # Purpose:  Sample solutions for the Numeric Data workshop unit.
 #
-# Version: 1.0
+# Version: 1.1
 #
-# Date:    2018  05  11
+# Date:    2019  05  12
 # Author:  Boris Steipe (boris.steipe@utoronto.ca)
 #
+# V 1.1    2019 Updates
 # V 1.0    First code 2018
 #
 # TODO:
@@ -21,18 +22,18 @@
 
 
 #TOC> ==========================================================================
-#TOC>
+#TOC> 
 #TOC>   Section  Title                                      Line
 #TOC> ----------------------------------------------------------
-#TOC>   1        SCENARIO                                     39
-#TOC>   2        Introduction to the bio3D package            53
-#TOC>   3        A Ramachandran plot                         134
-#TOC>   4        Density plots                               216
-#TOC>   4.1.1          ... as overlay on a colored grid      270
-#TOC>   4.1.2          ... as filled contour                 287
-#TOC>   4.1.3          ... as a perspective plot             328
-#TOC>   4.1.4          ... advanced perspective plot         345
-#TOC>
+#TOC>   1        SCENARIO                                     40
+#TOC>   2        Introduction to the bio3D package            62
+#TOC>   3        A Ramachandran plot                         151
+#TOC>   4        Density plots                               233
+#TOC>   4.1.1          ... as overlay on a colored grid      287
+#TOC>   4.1.2          ... as filled contour                 304
+#TOC>   4.1.3          ... as a perspective plot             345
+#TOC>   4.1.4          ... advanced perspective plot         362
+#TOC> 
 #TOC> ==========================================================================
 
 
@@ -283,7 +284,7 @@ str(dPhiPsi)
 contour(dPhiPsi)
 
 
-# ===   4.1.1  ... as overlay on a colored grid
+# ===   4.1.1  ... as overlay on a colored grid 
 
 image(dPhiPsi,
       col = myColorRamp(100),
@@ -300,7 +301,7 @@ abline(h = 0, lwd = 0.5, col = "#00000044")
 abline(v = 0, lwd = 0.5, col = "#00000044")
 
 
-# ===   4.1.2  ... as filled contour
+# ===   4.1.2  ... as filled contour            
 #
 # using a custom color-ramp
 
@@ -341,7 +342,7 @@ filled.contour(dPhiPsi,
                    abline(v = 0, lwd = 0.5, col = "#00000044")
                })
 
-# ===   4.1.3  ... as a perspective plot
+# ===   4.1.3  ... as a perspective plot        
 
 persp(dPhiPsi,
       xlab = "phi",
@@ -358,7 +359,7 @@ persp(dPhiPsi,
       zlab = "Density")
 
 
-# ===   4.1.4  ... advanced perspective plot
+# ===   4.1.4  ... advanced perspective plot    
 
 if (! require(plot3D, quietly=TRUE)) {
     install.packages("plot3D")

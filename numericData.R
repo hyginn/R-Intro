@@ -8,11 +8,12 @@
 #
 # Purpose:  Sample solutions for the Numeric Data workshop unit.
 #
-# Version: 1.0
+# Version: 1.1
 #
-# Date:    2018  05  13
+# Date:    2019  05  12
 # Author:  Boris Steipe (boris.steipe@utoronto.ca)
 #
+# V 1.1    2019 Updates
 # V 1.0    First code 2018
 #
 # TODO:
@@ -24,10 +25,10 @@
 #TOC> 
 #TOC>   Section  Title                                      Line
 #TOC> ----------------------------------------------------------
-#TOC>   1        SCENARIO                                     39
-#TOC>   2        Introduction to the bio3D package            61
-#TOC>   3        A Ramachandran plot                         147
-#TOC>   4        Density plots                               174
+#TOC>   1        SCENARIO                                     40
+#TOC>   2        Introduction to the bio3D package            62
+#TOC>   3        A Ramachandran plot                         148
+#TOC>   4        Density plots                               175
 #TOC>   4.1.1          ... as overlay on a colored grid      228
 #TOC>   4.1.2          ... as filled contour                 245
 #TOC>   4.1.3          ... as a perspective plot             286
@@ -60,9 +61,8 @@ source("./sampleSolutions/numericDataSampleSolutions-ShowPlot.R")
 
 # =    2  Introduction to the bio3D package  ===================================
 
-if (! require(bio3d, quietly=TRUE)) {
+if (! requireNamespace(bio3d, quietly=TRUE)) {
     install.packages("bio3d")
-    library(bio3d)
 }
 # Package information:
 #  library(help = bio3d)       # basic information
@@ -73,8 +73,9 @@ if (! require(bio3d, quietly=TRUE)) {
 # bio3d can load molecules directly from the PDB servers, you don't _have_ to
 # store them locally, but you can
 
-GNASpdb <- read.pdb("6AU6")  # load a molecule directly from the PDB via the
-# Internet. (This is not the local version in the project's ./data folder.)
+GNASpdb <- bio3d::read.pdb("6AU6")  # load a molecule directly from the PDB
+# via the Internet. (This is not the local version in the project's
+# ./data folder.)
 
 # check what we have:
 GNASpdb
@@ -108,7 +109,7 @@ GNASpdb$atom[GNASpdb$atom[,"resno"] == i, ]
 GNASpdb$seqres[1:10]  # the "A"s here identify chain "A"
 
 # Convert this to one letter code
-aa321(GNASpdb$seqres[1:10])
+bio3d::aa321(GNASpdb$seqres[1:10])
 
 
 # Task 2.1  List the implicit sequence contained in the file. Note: the
@@ -118,7 +119,7 @@ aa321(GNASpdb$seqres[1:10])
 #           contained in the coordinates. This is not necessarily the same,
 #           there may be modifications, or N- or C- termini or loops may
 #           be invisible in the coordinates. In general, the explicit sequence
-#           is what the crystallographer puts into the exp[eriment, the
+#           is what the crystallographer puts into the experiment, the
 #           implicit sequence is how she interprets the resulting electron
 #           density map.
 
@@ -138,17 +139,17 @@ GNASpdb$atom[sel, c("eleno", "elety", "resid", "chain", "resno", "insert")]
 # The introduction to bio3d tutorial at
 #   http://thegrantlab.org/bio3d/tutorials/structure-analysis
 # has the following example:
-plot.bio3d(GNASpdb$atom$b[GNASpdb$calpha],
-           sse=GNASpdb,
-           typ="l",
-           ylab="B-factor")
+bio3d::plot.bio3d(GNASpdb$atom$b[GNASpdb$calpha],
+                  sse=GNASpdb,
+                  typ="l",
+                  ylab="B-factor")
 
 
 # =    3  A Ramachandran plot  =================================================
 
 # Task 2.1  Calculate a Ramachandran plot for the structure. Hint: the
-#           torsion.pdb() function calculates all dihedral angles for backbone
-#           and sidechain bonds, NA where the bond does not exist in an
+#           bio3d::torsion.pdb() function calculates all dihedral angles for
+#           backbone and sidechain bonds, NA where the bond does not exist in an
 #           amino acid. Assign the values to the variable name "tor".
 
 
@@ -196,16 +197,15 @@ plot.bio3d(GNASpdb$atom$b[GNASpdb$calpha],
 # distributions. But for 2D data like or phi-psi plots, we need a function from
 # the MASS package: kde2d()
 
-if (! require(MASS, quietly=TRUE)) {
+if (! requireNamespace(MASS, quietly=TRUE)) {
     install.packages("MASS")
-    library(MASS)
 }
 # Package information:
 #  library(help = MASS)       # basic information
 #  browseVignettes("MASS")    # available vignettes
 #  data(package = "MASS")     # available datasets
 
-?kde2d
+?MASS::kde2d
 
 all(is.na(tor$phi) == sum(is.na(tor$phi))
 sel <- !(is.na(tor$phi) | is.na(tor$psi))
@@ -214,9 +214,9 @@ psi <- tor$psi[sel]
 
 
 
-dPhiPsi <-kde2d(phi, psi,
-                n = 60,
-                lims = c(-180, 180, -180, 180))
+dPhiPsi <-MASS::kde2d(phi, psi,
+                      n = 60,
+                      lims = c(-180, 180, -180, 180))
 
 str(dPhiPsi)
 # This is a list, with gridpoints in x and y, and the estimated densities in z.
@@ -388,8 +388,5 @@ labelPos <- trans3d(minX, (minY - labelOffset), zPos, pMat)
 text(labelPos$x, labelPos$y,
      labels = as.character(zPos),
      adj = c(1, NA), cex = 0.6)
-
-
-
 
 # [END]

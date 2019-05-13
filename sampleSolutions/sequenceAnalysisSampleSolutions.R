@@ -8,11 +8,12 @@
 #
 # Purpose:  Sample solutions for Sequence Analysis workshop unit.
 #
-# Version: 1.0
+# Version: 1.1
 #
-# Date:    2018  05  09
+# Date:    2019  05  12
 # Author:  Boris Steipe (boris.steipe@utoronto.ca)
 #
+# V 1.1    2019 updates
 # V 1.0    First code 2018
 #
 # TODO:
@@ -21,13 +22,13 @@
 
 
 #TOC> ==========================================================================
-#TOC>
+#TOC> 
 #TOC>   Section  Title                     Line
 #TOC> -----------------------------------------
-#TOC>   1        READ DATA                   35
-#TOC>   2        ANALYZE THE DATA           122
-#TOC>   3        PLOT DATA                  213
-#TOC>
+#TOC>   1        READ DATA                   36
+#TOC>   2        ANALYZE THE DATA           123
+#TOC>   3        PLOT DATA                  214
+#TOC> 
 #TOC> ==========================================================================
 
 

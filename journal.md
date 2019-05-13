@@ -5,7 +5,8 @@
 - [Workshop documents on Github]()
 - [Course Webpage](https://bioinformaticsdotca.github.io/intror_2019)
 - [Intro to Markdown](https://help.github.com/en/categories/writing-on-github)
-- [Markdown Cheatsheet](https://github.com/hyginn/R-Intro/blob/master/markdownCheatsheet.md)
+- [Markdown Cheatsheet](https://github.com/hyginn/R-Intro/blob/master/assets/markdownCheatsheet.md)
+- [The RStudio Cheatsheet collection](https://www.rstudio.com/wp-content/uploads/2019/01/Cheatsheets_2019.pdf)
 
 
 ## Notes:

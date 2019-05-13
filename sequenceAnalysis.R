@@ -8,11 +8,12 @@
 #
 # Purpose:
 #
-# Version: 1.0
+# Version: 1.1
 #
-# Date:    2018  05  09
+# Date:    2019  05  12
 # Author:  Boris Steipe (boris.steipe@utoronto.ca)
 #
+# V 1.1    2019 updates
 # V 1.0    First code 2018
 #
 # TODO:
@@ -35,10 +36,10 @@
 #TOC> 
 #TOC>   Section  Title                     Line
 #TOC> -----------------------------------------
-#TOC>   1        SCENARIO                    46
-#TOC>   2        READ DATA                   55
-#TOC>   3        ANALYZE THE DATA            94
-#TOC>   4        PLOT DATA                  110
+#TOC>   1        SCENARIO                    47
+#TOC>   2        READ DATA                   56
+#TOC>   3        ANALYZE THE DATA            95
+#TOC>   4        PLOT DATA                  111
 #TOC> 
 #TOC> ==========================================================================
 

@@ -8,11 +8,12 @@
 #
 # Purpose:  Sample solutions for the Data Model workshop unit.
 #
-# Version: 1.0
+# Version: 1.1
 #
-# Date:    2018  05  10
+# Date:    2019  05  12
 # Author:  Boris Steipe (boris.steipe@utoronto.ca)
 #
+# V 1.1    2019 Updates
 # V 1.0    First code 2018
 #
 # TODO:
@@ -21,17 +22,17 @@
 
 
 #TOC> ==========================================================================
-#TOC>
+#TOC> 
 #TOC>   Section  Title                                     Line
 #TOC> ---------------------------------------------------------
-#TOC>   1        SCENARIO                                    38
-#TOC>   2        READ DATA                                   42
-#TOC>   3        EXPLORE DATA                               121
-#TOC>   4        INTEGRATE  DATA                            215
-#TOC>   4.1        BioMart provides integrated data         234
-#TOC>   4.2        Put the data together                    273
-#TOC>   5        PLOT THE DATA                              364
-#TOC>
+#TOC>   1        SCENARIO                                    39
+#TOC>   2        READ DATA                                   43
+#TOC>   3        EXPLORE DATA                               122
+#TOC>   4        INTEGRATE  DATA                            216
+#TOC>   4.1        BioMart provides integrated data         235
+#TOC>   4.2        Put the data together                    274
+#TOC>   5        PLOT THE DATA                              365
+#TOC> 
 #TOC> ==========================================================================
 
 
