@@ -33,7 +33,7 @@ readFasta <- function(FN) {
 
     x <- readLines(FN)
 
-    if (! identical(grep("^>", x), 1L)) {
+    if (! (grepl("^>", x[1]))) {
         stop("Not a FASTA formatted input file.")
     }
 
