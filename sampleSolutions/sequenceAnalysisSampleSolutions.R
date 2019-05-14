@@ -8,11 +8,12 @@
 #
 # Purpose:  Sample solutions for Sequence Analysis workshop unit.
 #
-# Version: 1.1
+# Version: 1.2
 #
-# Date:    2019  05  12
+# Date:    2019  05  13
 # Author:  Boris Steipe (boris.steipe@utoronto.ca)
 #
+# V 1.2    In-workshop updates updates
 # V 1.1    2019 updates
 # V 1.0    First code 2018
 #
@@ -22,13 +23,13 @@
 
 
 #TOC> ==========================================================================
-#TOC> 
+#TOC>
 #TOC>   Section  Title                     Line
 #TOC> -----------------------------------------
 #TOC>   1        READ DATA                   36
 #TOC>   2        ANALYZE THE DATA           123
 #TOC>   3        PLOT DATA                  214
-#TOC> 
+#TOC>
 #TOC> ==========================================================================
 
 
@@ -136,6 +137,9 @@ for (i in 1:length(mySeq)) {
     if (mySeq[i] == "T") { nT <- nT + 1 }
 }
 
+# ... or use: if() { } elseif() { }
+# ... or: use table()
+
 (nG + nC) / (nA + nC + nG + nT)
 
 #             - using grepl() ...
@@ -184,7 +188,7 @@ barplot(ch20DiNucTable)
 # Task 3.4: What are the expected dinucleotide frequencies?
 #           - Can we get them from first principles?
 #             From first principles, we expect that the frequency of a
-#             dinucleotide is the 1/2 the product of the frequencies of the
+#             dinucleotide is 1/2 the product of the frequencies of the
 #             nucleotides. Let's assemble them in a loop. We want the output
 #             to be a named vector of frequencies.
 

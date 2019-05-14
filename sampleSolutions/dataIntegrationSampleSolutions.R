@@ -22,7 +22,7 @@
 
 
 #TOC> ==========================================================================
-#TOC> 
+#TOC>
 #TOC>   Section  Title                                     Line
 #TOC> ---------------------------------------------------------
 #TOC>   1        SCENARIO                                    39
@@ -32,7 +32,7 @@
 #TOC>   4.1        BioMart provides integrated data         235
 #TOC>   4.2        Put the data together                    274
 #TOC>   5        PLOT THE DATA                              365
-#TOC> 
+#TOC>
 #TOC> ==========================================================================
 
 
@@ -55,15 +55,16 @@
 #             same gene: ENSG00000087460
 #             https://useast.ensembl.org/Homo_sapiens/Gene/Summary?db=core;g=ENSG00000087460
 #           - Click on "Export Data"
-#           - Select "CSV (Comma Separated Values)"
+#           - Select "CSV (Comma Separated Values)" in the "Feature Fle" section
 #           - Check ONLY the "Gene information" checkbox
 #           - Click on "Next >"
+#           - Choose output format: Text
 #           - Save the result page as "ENSG00000087460data.csv"
 #           - Read the file into an R data frame called GNAStranscripts.
 
 GNAStranscripts <- read.csv("./data/ENSG00000087460data.csv",
                             header = TRUE,
-                            stringsAsFactors = FALSE)
+                            as.is = TRUE)  # Don't convert strings into factors
 
 head(GNAStranscripts)
 
@@ -117,7 +118,7 @@ plot(sort(tLengths, decreasing = TRUE))
 #
 #           - Read the file into a data frame called "GNASmutations"
 GNASmutations <- read.delim("./data/GNAS-distribution-data.tsv",
-                            stringsAsFactors = FALSE)
+                            as.is = TRUE)
 
 # =    3  EXPLORE DATA  ========================================================
 #
@@ -183,19 +184,21 @@ myIntRef <- myIntRef[! sel, ]
 #             - Let's first rename mySeq
 mySeq38 <- mySeq
 #
-#             - next we find a gene source for GRCh37. We started from ...
-#               https://useast.ensembl.org/Homo_sapiens/Info/Index ...
-#               ... find "GRCh37 full archive ..." on that page and click "Go".
-#               Of course, searching for the same coordinates won't help, so
-#               search for GNAS ... and click on "GNAS human gene". Coordinates
-#               57,410,001-57,510,000 seem to cover the region. Copy the URL
-#               that we used last time, and edit it appropriately:
+#             - next we find a gene source for GRCh37.
+#               GRCh37 data are available in a stable archive at ensembl:
+#               http://grch37.ensembl.org/index.html
 #
+#               Navigate to that page, select "human" in the search box and
+#               enter GNAS.
+#
+#               ... find "GRCh37 full archive ..." on that page and click "Go".
+#               To download the GRCh37 sequence (istead of our GRCh38
+#               coordinates) ... the following URL will work:
 # https://grch37.ensembl.org/Homo_sapiens/Export/Output/Location?db=core;output=fasta;r=20:57410001-57510000;genomic=unmasked;_format=Text
 #
 #             - save the output as chr20-100kbp.37.fasta
 #             - then read it with
-mySeq37 <- readFasta("./data/chr20-100kbp.37.fasta")
+mySeq37 <- readFASTA("./data/chr20-100kbp.37.fasta")
 #
 #             - (verifications as before)
 #
@@ -217,12 +220,9 @@ all(myIntRef$REF == myGenomeRef$REF, na.rm = TRUE)
 
 # The resulting data is all over the place. We have a table with transcript
 # annotations, a derived vector of lengths, some of our coordinates are
-# from GRCh37, some are GRCh38. Integration is possible - but probably messy.
-# We need to discuss first what a "proper" data model looks like in principle,
-# then we'll explore BioMart, a versatile integration solution.
+# from GRCh37, some are GRCh38. Integrating this might be messy ...
+# we'll explore BioMart, a versatile integration solution.
 #
-# Your ./assets folder contains a file: FND-CSC-Data_models.pdf ...
-# >>> (Slides from FND-CSC-Data_models.pdf)
 #
 # Now: what do we need to integrate for our plot?
 # - we need genomic coordinates, because that's what our sequencing
@@ -230,7 +230,6 @@ all(myIntRef$REF == myGenomeRef$REF, na.rm = TRUE)
 # - we need the coding sequence
 # - we need the codon positions/translation
 # - we need the mutations that are mapped to the sequence of interest
-# >>> sketch a datamodel
 #
 # ==   4.1  BioMart provides integrated data  ==================================
 #
@@ -259,17 +258,16 @@ all(myIntRef$REF == myGenomeRef$REF, na.rm = TRUE)
 # Once you have selected what you need  - or just to explore what you selected,
 # as a preview - click "Results". Finally select ...
 # "Export all results to" ... "File" "TSV" , and "Go". Inspect the resulting
-# file. But hold on ... are these the coordinates we need?
-#
-# Task 4.1.1  Save the correct gene model coordinates as GNASgeneModels.37.tsv
-#             in your project folder.
+# file. But hold on ... are these the coordinates we need? No: we need this for
+# GRCh37. Rather than repeat everything, just work with the (supplied) correct
+# gene model coordinates in the "sampleSolutions" folder.
 #
 #      >>>    c.f. ./sampleSolutions/GNASgeneModels.37.tsv
 #
 #             - Read the data into a data frame, call it GNASmodels
 
 GNASmodels <- read.delim("./sampleSolutions/GNASgeneModels.37.tsv",
-                         stringsAsFactors = FALSE)
+                         as.is = FALSE)
 
 # ==   4.2  Put the data together  =============================================
 #
@@ -319,9 +317,10 @@ GNAS2protein <- data.frame(coords = coord2vec(GNAS2Model))
 GNAS2protein$nuc <- mySeq37[GNAS2protein$coords - OFFSET]
 GNAS2protein$codonPos <- 1:3
 
-
-library(seqinr)
-x <- translate(GNAS2protein$nuc)
+if (! requireNamespace("seqinr")) {
+    install.packages("seqinr")
+}
+x <- seqinr::translate(GNAS2protein$nuc)
 
 tail(GNAS2protein) # looking good
 paste(x, collapse = "")  # is this correct?
@@ -356,11 +355,6 @@ for (i in idx) {
 
 table(GNAS2mut$START)  # how many of each?
 
-# >>> Are there codons that are affected more than once?
-sel <- which(GNAS2protein$coords %in% GNAS2mut$START)
-table(GNAS2protein$iCodon[sel]) # Yes. That would be difficult to tell from
-                                # the mutation table, because different
-                                # transcripts have different lengths.
 
 # =    5  PLOT THE DATA  =======================================================
 #
