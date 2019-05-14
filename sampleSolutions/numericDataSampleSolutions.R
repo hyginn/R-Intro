@@ -61,7 +61,7 @@ source("./sampleSolutions/numericDataSampleSolutions-ShowPlot.R")
 
 # =    2  Introduction to the bio3D package  ===================================
 
-if (! require(bio3d, quietly=TRUE)) {
+if (! requireNamespace("bio3d", quietly = TRUE)) {
     install.packages("bio3d")
 }
 # Package information:
@@ -220,7 +220,7 @@ for (i in 1:nrow(dat)) {
     points(dat$phi[i], dat$psi[i], pch=21, cex=0.9, bg="#CC0000")
     text(dat$phi[i],
          dat$psi[i],
-         labels = sprintf("%s%d", aa321(dat$resid[i]), dat$resno[i]),
+         labels = sprintf("%s%d", bio3d::aa321(dat$resid[i]), dat$resno[i]),
          pos = 4,
          offset = 0.4,
          cex = 0.7)
@@ -265,7 +265,7 @@ if (! require(MASS, quietly=TRUE)) {
 
 ?MASS::kde2d
 
-all(is.na(tor$phi) == sum(is.na(tor$phi))
+all(is.na(tor$phi) == sum(is.na(tor$phi)))
 sel <- !(is.na(tor$phi) | is.na(tor$psi))
 phi <- tor$phi[sel]
 psi <- tor$psi[sel]
@@ -284,6 +284,8 @@ contour(dPhiPsi)
 
 
 # ===   4.1.1  ... as overlay on a colored grid
+#
+# TODO - define myColorRamp before!
 
 image(dPhiPsi,
       col = myColorRamp(100),
@@ -303,6 +305,7 @@ abline(v = 0, lwd = 0.5, col = "#00000044")
 # ===   4.1.2  ... as filled contour
 #
 # using a custom color-ramp
+
 
 myColorRamp <- colorRampPalette(c("#99AACC",
                                   "#3399CC",
@@ -360,7 +363,7 @@ persp(dPhiPsi,
 
 # ===   4.1.4  ... advanced perspective plot
 
-if (! require(plot3D, quietly=TRUE)) {
+if (! requireNamespace("plot3D", quietly=TRUE)) {
     install.packages("plot3D")
 }
 # Package information:
@@ -409,23 +412,23 @@ pMat <- plot3D::persp3D(z = dPhiPsi$z * zScale,
 # given the transformation matrix pMat that is returned by the plot.
 #
 # draw the axis lines
-lines(plot3D::trans3d(xPos, minY, minZ, pMat) , col="#222255", lwd = 3)
-lines(plot3D::trans3d(maxX, yPos, minZ, pMat) , col="#222255", lwd = 3)
-lines(plot3D::trans3d(minX, minY, zPos, pMat) , col="#222255", lwd = 3)
+lines(trans3d(xPos, minY, minZ, pMat) , col="#222255", lwd = 3)
+lines(trans3d(maxX, yPos, minZ, pMat) , col="#222255", lwd = 3)
+lines(trans3d(minX, minY, zPos, pMat) , col="#222255", lwd = 3)
 
 
 # draw tick marks
 tickLength <- (maxX - minX) * 0.05
-tickStart <- plot3D::trans3d(xPos,  minY,               minZ, pMat)
-tickEnd   <- plot3D::trans3d(xPos, (minY - tickLength), minZ, pMat)
-plot3D::segments(tickStart$x, tickStart$y, tickEnd$x, tickEnd$y)
+tickStart <- trans3d(xPos,  minY,               minZ, pMat)
+tickEnd   <- trans3d(xPos, (minY - tickLength), minZ, pMat)
+segments(tickStart$x, tickStart$y, tickEnd$x, tickEnd$y)
 
-tickStart <- plot3D::trans3d( maxX,               yPos, minZ, pMat)
-tickEnd   <- plot3D::trans3d((maxX + tickLength), yPos, minZ, pMat)
-plot3D::segments(tickStart$x, tickStart$y, tickEnd$x, tickEnd$y)
+tickStart <- trans3d( maxX,               yPos, minZ, pMat)
+tickEnd   <- trans3d((maxX + tickLength), yPos, minZ, pMat)
+segments(tickStart$x, tickStart$y, tickEnd$x, tickEnd$y)
 
-tickStart <- plot3D::trans3d(minX,                minY, zPos, pMat)
-tickEnd   <- plot3D::trans3d(minX, (minY - tickLength), zPos, pMat)
+tickStart <- trans3d(minX,                minY, zPos, pMat)
+tickEnd   <- trans3d(minX, (minY - tickLength), zPos, pMat)
 segments(tickStart$x, tickStart$y, tickEnd$x, tickEnd$y)
 
 
