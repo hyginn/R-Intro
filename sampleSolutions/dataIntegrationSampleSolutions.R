@@ -17,7 +17,12 @@
 # V 1.0    First code 2018
 #
 # TODO:
-#
+#   - Draft sketch for data objects that we need and that are integrated for
+#     the final graph.
+#   - gene models: GTF files?
+#   - Work from non-intogen data (avoid having to go back to GRCh37).
+#     Maybe include biomart package?
+#   -
 # ==============================================================================
 
 

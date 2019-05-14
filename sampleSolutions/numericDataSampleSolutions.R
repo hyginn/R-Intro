@@ -22,7 +22,7 @@
 
 
 #TOC> ==========================================================================
-#TOC> 
+#TOC>
 #TOC>   Section  Title                                      Line
 #TOC> ----------------------------------------------------------
 #TOC>   1        SCENARIO                                     40
@@ -33,7 +33,7 @@
 #TOC>   4.1.2          ... as filled contour                 304
 #TOC>   4.1.3          ... as a perspective plot             345
 #TOC>   4.1.4          ... advanced perspective plot         362
-#TOC> 
+#TOC>
 #TOC> ==========================================================================
 
 
@@ -63,7 +63,6 @@ source("./sampleSolutions/numericDataSampleSolutions-ShowPlot.R")
 
 if (! require(bio3d, quietly=TRUE)) {
     install.packages("bio3d")
-    library(bio3d)
 }
 # Package information:
 #  library(help = bio3d)       # basic information
@@ -74,8 +73,8 @@ if (! require(bio3d, quietly=TRUE)) {
 # bio3d can load molecules directly from the PDB servers, you don't _have_ to
 # store them locally, but you can
 
-GNASpdb <- read.pdb("6AU6")  # load a molecule directly from the PDB via the
-# Internet. (This is not the local version in the project's ./data folder.)
+GNASpdb <- bio3d::read.pdb("6AU6")  # load a molecule directly from the PDB via
+# the Internet. (This is not the local version in the project's ./data folder.)
 
 # check what we have:
 GNASpdb
@@ -109,7 +108,7 @@ GNASpdb$atom[GNASpdb$atom[,"resno"] == i, ]
 GNASpdb$seqres[1:10]  # the "A"s here identify chain "A"
 
 # Convert this to one letter code
-aa321(GNASpdb$seqres[1:10])
+bio3d::aa321(GNASpdb$seqres[1:10])
 
 
 # Task 2.1  List the implicit sequence contained in the file. Note: the
@@ -124,7 +123,8 @@ aa321(GNASpdb$seqres[1:10])
 #           density map.
 
 # Lets get the implicit sequence:
-aa321((GNASpdb$atom$resid[GNASpdb$calpha])[1:10])  # Do you understand this code?
+bio3d::aa321((GNASpdb$atom$resid[GNASpdb$calpha])[1:10])  # Do you understand
+                                                          # this code?
 
 # Task 2.2  Do explicit and implicit sequence have the same length?
 length(GNASpdb$seqres)
@@ -142,10 +142,10 @@ GNASpdb$atom[sel, c("eleno", "elety", "resid", "chain", "resno", "insert")]
 # The introduction to bio3d tutorial at
 #   http://thegrantlab.org/bio3d/tutorials/structure-analysis
 # has the following example:
-plot.bio3d(GNASpdb$atom$b[GNASpdb$calpha],
-           sse=GNASpdb,
-           typ="l",
-           ylab="B-factor")
+bio3d::plot.bio3d(GNASpdb$atom$b[GNASpdb$calpha],
+                  sse=GNASpdb,
+                  typ="l",
+                  ylab="B-factor")
 
 
 # =    3  A Ramachandran plot  =================================================
@@ -155,7 +155,7 @@ plot.bio3d(GNASpdb$atom$b[GNASpdb$calpha],
 #           and sidechain bonds, NA where the bond does not exist in an
 #           amino acid.
 
-tor <- torsion.pdb(GNASpdb)
+tor <- bio3d::torsion.pdb(GNASpdb)
 plot(tor$phi, tor$psi,
      xlim = c(-180, 180), ylim = c(-180, 180),
      main = "Ramachandran plot for 6AU6",
@@ -174,7 +174,7 @@ abline(v = 0, lwd = 0.5, col = "#00000044")
 #      >>>> First, we get a vector of glycine residue indices
 #           in the structure:
 
-mySeq <- pdbseq(GNASpdb)
+mySeq <- bio3d::pdbseq(GNASpdb)
 mySeq == "G"
 which(mySeq == "G")
 iGly <- which(mySeq == "G")
@@ -257,14 +257,13 @@ for (i in 1:nrow(dat)) {
 
 if (! require(MASS, quietly=TRUE)) {
     install.packages("MASS")
-    library(MASS)
 }
 # Package information:
 #  library(help = MASS)       # basic information
 #  browseVignettes("MASS")    # available vignettes
 #  data(package = "MASS")     # available datasets
 
-?kde2d
+?MASS::kde2d
 
 all(is.na(tor$phi) == sum(is.na(tor$phi))
 sel <- !(is.na(tor$phi) | is.na(tor$psi))
@@ -273,9 +272,9 @@ psi <- tor$psi[sel]
 
 
 
-dPhiPsi <-kde2d(phi, psi,
-                n = 60,
-                lims = c(-180, 180, -180, 180))
+dPhiPsi <-MASS::kde2d(phi, psi,
+                      n = 60,
+                      lims = c(-180, 180, -180, 180))
 
 str(dPhiPsi)
 # This is a list, with gridpoints in x and y, and the estimated densities in z.
@@ -284,7 +283,7 @@ str(dPhiPsi)
 contour(dPhiPsi)
 
 
-# ===   4.1.1  ... as overlay on a colored grid 
+# ===   4.1.1  ... as overlay on a colored grid
 
 image(dPhiPsi,
       col = myColorRamp(100),
@@ -301,7 +300,7 @@ abline(h = 0, lwd = 0.5, col = "#00000044")
 abline(v = 0, lwd = 0.5, col = "#00000044")
 
 
-# ===   4.1.2  ... as filled contour            
+# ===   4.1.2  ... as filled contour
 #
 # using a custom color-ramp
 
@@ -342,7 +341,7 @@ filled.contour(dPhiPsi,
                    abline(v = 0, lwd = 0.5, col = "#00000044")
                })
 
-# ===   4.1.3  ... as a perspective plot        
+# ===   4.1.3  ... as a perspective plot
 
 persp(dPhiPsi,
       xlab = "phi",
@@ -359,11 +358,10 @@ persp(dPhiPsi,
       zlab = "Density")
 
 
-# ===   4.1.4  ... advanced perspective plot    
+# ===   4.1.4  ... advanced perspective plot
 
 if (! require(plot3D, quietly=TRUE)) {
     install.packages("plot3D")
-    library(plot3D)
 }
 # Package information:
 #  library(help = plot3D)       # basic information
@@ -387,47 +385,47 @@ maxZ <- 150
 zPos <- seq(minZ, maxZ, by=50)
 
 # draw the plot, save the perspective matrix
-pMat <- persp3D(z = dPhiPsi$z * zScale,
-                x = dPhiPsi$x,
-                y = dPhiPsi$y,
-                xlab = "phi",
-                ylab = "psi",
-                zlab = "density",
-                main = "phi/psi plot of 6AU6",
-                axes = FALSE,
-                theta = 50,
-                phi = 15,
-                expand = 2,
-                facets = TRUE,
-                scale = FALSE,
-                col = myColorRamp(40),
-                shade = 0.2,
-                border = "#FFFFFF22",
-                clab = "density",
-                colkey = list(side = 4, length = 0.6))
+pMat <- plot3D::persp3D(z = dPhiPsi$z * zScale,
+                        x = dPhiPsi$x,
+                        y = dPhiPsi$y,
+                        xlab = "phi",
+                        ylab = "psi",
+                        zlab = "density",
+                        main = "phi/psi plot of 6AU6",
+                        axes = FALSE,
+                        theta = 50,
+                        phi = 15,
+                        expand = 2,
+                        facets = TRUE,
+                        scale = FALSE,
+                        col = myColorRamp(40),
+                        shade = 0.2,
+                        border = "#FFFFFF22",
+                        clab = "density",
+                        colkey = list(side = 4, length = 0.6))
 
 
 # Transformed axes are drawn "by hand" from lines(), segements(), and text()
 # given the transformation matrix pMat that is returned by the plot.
 #
 # draw the axis lines
-lines(trans3d(xPos, minY, minZ, pMat) , col="#222255", lwd = 3)
-lines(trans3d(maxX, yPos, minZ, pMat) , col="#222255", lwd = 3)
-lines(trans3d(minX, minY, zPos, pMat) , col="#222255", lwd = 3)
+lines(plot3D::trans3d(xPos, minY, minZ, pMat) , col="#222255", lwd = 3)
+lines(plot3D::trans3d(maxX, yPos, minZ, pMat) , col="#222255", lwd = 3)
+lines(plot3D::trans3d(minX, minY, zPos, pMat) , col="#222255", lwd = 3)
 
 
 # draw tick marks
 tickLength <- (maxX - minX) * 0.05
-tickStart <- trans3d(xPos,  minY,               minZ, pMat)
-tickEnd   <- trans3d(xPos, (minY - tickLength), minZ, pMat)
-segments(tickStart$x, tickStart$y, tickEnd$x, tickEnd$y)
+tickStart <- plot3D::trans3d(xPos,  minY,               minZ, pMat)
+tickEnd   <- plot3D::trans3d(xPos, (minY - tickLength), minZ, pMat)
+plot3D::segments(tickStart$x, tickStart$y, tickEnd$x, tickEnd$y)
 
-tickStart <- trans3d( maxX,               yPos, minZ, pMat)
-tickEnd   <- trans3d((maxX + tickLength), yPos, minZ, pMat)
-segments(tickStart$x, tickStart$y, tickEnd$x, tickEnd$y)
+tickStart <- plot3D::trans3d( maxX,               yPos, minZ, pMat)
+tickEnd   <- plot3D::trans3d((maxX + tickLength), yPos, minZ, pMat)
+plot3D::segments(tickStart$x, tickStart$y, tickEnd$x, tickEnd$y)
 
-tickStart <- trans3d(minX,                minY, zPos, pMat)
-tickEnd   <- trans3d(minX, (minY - tickLength), zPos, pMat)
+tickStart <- plot3D::trans3d(minX,                minY, zPos, pMat)
+tickEnd   <- plot3D::trans3d(minX, (minY - tickLength), zPos, pMat)
 segments(tickStart$x, tickStart$y, tickEnd$x, tickEnd$y)
 
 
